@@ -8,7 +8,7 @@ class AlumnoPresencial extends Alumno
     const PORCENTAJEASISTENCIA = 75;
     protected static $DIASHABILES;
 
-	public function __construct ($nombre, $apellido, $dni, $Notas, $inasistencias)
+	public function __construct ($nombre, $apellido, $dni, $inasistencias, $Notas)
     {
     	$this->nombre = $nombre;
     	$this->apellido = $apellido;
@@ -24,12 +24,12 @@ class AlumnoPresencial extends Alumno
     
     public function CalcularPorcentajeAsistencias()
     {
-        $resultado = (((self::$DIASHABILES - $this->inasistencias) * 100) / self::$DIASHABILES);
+        $resultado = ((self::$DIASHABILES - $this->inasistencias) * 100) / self::$DIASHABILES;
         return $resultado;        
     }      
     public function ControlarNotas()
     {
-        foreach ($this->notas as $valor)
+        foreach ($this->Notas as $valor)
             {
                 if($valor < 4) 
                 {
@@ -41,7 +41,8 @@ class AlumnoPresencial extends Alumno
     
     public function CalcularNota()
     {
-        if ($resultado < PORCENTAJEASISTENCIA || $this->ControlarNotas == false) 
+        if ($this->CalcularPorcentajeAsistencias() < self::PORCENTAJEASISTENCIA
+            || $this->ControlarNotas() == false) 
         { 
             return 1;   
         }  
@@ -52,11 +53,11 @@ class AlumnoPresencial extends Alumno
             {
                 $x = $x + $valor;
             } 
-        return $x / count($this->notas);
+        return $x / count($this->Notas);
         }
     }
     public function getNotas()
         {
-            return $this->Notas;
+            return $this->CalcularNota();
         }
 }

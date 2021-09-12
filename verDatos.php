@@ -25,6 +25,6 @@ $datos['nota'] = $alumno->getNotas();
 
 //Para probar el método __toString():
 //$datos['cadena'] = "Datos del alumno: " . $alumno;
-echo "<pre>"; print_r($datos);
+//echo "<pre>"; print_r($datos);
 header('Content-Type: application/json');
 echo json_encode($datos);
